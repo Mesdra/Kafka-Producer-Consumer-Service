@@ -1,6 +1,7 @@
 package br.com.mesdra.strproducer.resources;
 
 
+import br.com.mesdra.strproducer.exception.PublicException;
 import br.com.mesdra.strproducer.services.StringProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,19 @@ public class StringProducerController {
     @PostMapping
     public ResponseEntity<?> sendMessage(@RequestBody String message){
         message = message != null ? message.trim() : message;
+
         if(message != null  && !message.isEmpty()) {
-            producerService.sendMessage(message);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            try {
+                producerService.sendMessage(message);
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+            }catch (PublicException e){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+            }
+
         }else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+
     }
 
 
