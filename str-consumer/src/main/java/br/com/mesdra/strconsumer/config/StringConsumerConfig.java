@@ -35,8 +35,7 @@ public class StringConsumerConfig {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> strContainerFactory(
-            ConsumerFactory<String, String> consumerFactory
-                                                                                      ) {
+            ConsumerFactory<String, String> consumerFactory) {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
         factory.setConsumerFactory(consumerFactory);
         return factory;
@@ -44,8 +43,7 @@ public class StringConsumerConfig {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> validMessageContainerFactory(
-            ConsumerFactory<String, String> consumerFactory
-                                                                                               ) {
+            ConsumerFactory<String, String> consumerFactory) {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
         factory.setConsumerFactory(consumerFactory);
         factory.setRecordInterceptor(validMessage());
